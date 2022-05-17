@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[show edit update destroy]
-  skip_before_action :require_login, only: %I[index new create]
+  skip_before_action :require_login, only: %i[new create]
 
   # GET /users
   def index
@@ -25,6 +25,7 @@ class UsersController < ApplicationController
     if @user.save
       redirect_to login_path, success: 'User was successfully created.'
     else
+      flash.now[:danger] = 'User creation failed.'
       render :new
     end
   end
